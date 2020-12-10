@@ -1,8 +1,13 @@
 /// <reference types="cypress" />
 
 describe('Compra', () => {
-    it('Efetuar uma compra de produto', () => {
-        cy.visit('/');
+    it.only('Efetuar uma compra de produto', () => {
+
+        cy.backgroundLogin()
+
+        cy.visit('/')
+
+        // cy.pause()
         
         let nomeProduto = 'Faded Short Sleeve T-shirts'
         
@@ -22,17 +27,26 @@ describe('Compra', () => {
 
         cy.get('span#layer_cart_product_title').should('contain.text', nomeProduto)
 
+        // cy.pause()
+
         cy.get(".button-container a[href$='controller=order']").click()
         
         cy.get(".cart_navigation a[href$='controller=order&step=1']").click()
 
+        /*
         cy.get('#email').type('guilherme.sousa@gazin.com.br')
         cy.get('#passwd').type('12345678')
 
         cy.get('#SubmitLogin').click()
-        
-        // [type="checkbox"]#addressesAreEquals
+        */
+
+        // Validando se o endereço de cobrança é igual o de cobrança
         // [type="checkbox"]#addressesAreEquals[value="1"][checked="checked"]
+
+        // asserção | atributo | valor    
+        // 'have.attr' quer fizer tenha o atributo checked e que esse atributo se chame checked.
+        cy.get('[type="checkbox"]#addressesAreEquals').should('have.attr', 'checked', 'checked')
+        cy.get('[type="checkbox"]#addressesAreEquals').should('have.attr', 'name', 'same')
         
         cy.get('button[name="processAddress"]').click()
         
@@ -52,5 +66,42 @@ describe('Compra', () => {
 
         cy.get('p[class="cheque-indent"] strong')
             .should('contain.text', 'Your order on My Store is complete.')
+
+
+        cy.get('div.box').invoke('text').then((text) => {
+            console.log(text)
+
+            // https://regexr.com/
+            console.log(text.match(/[A-Z][A-Z]+/g)[1]) // no caso o [1] é um array e representa o ID do pedido
+            // 0 -> RTP
+            // 1 -> ID do pedido
+
+            // Escrita de um arquivo json com o conteúdo do pedido
+            // Caminho do arquivo (o caminho é sempre a partir do root do projeto) | conteúdo do arquivo
+            // Ao passar o diretório + nome do arquivo, o mesmo será criado após a execução do teste
+            cy.writeFile('cypress/fixtures/pedido.json', { id: `${text.match(/[A-Z][A-Z]+/g)[1]}` })
+        })
+
+        cy.get(".cart_navigation a[href$='history']").click()
+
+        // Leitura de um arquivo
+        cy.readFile('cypress/fixtures/pedido.json').then((pedido) => {
+
+            cy.get('tr.first_item .history_link a').should('contain.text', pedido.id)
+        })
+
+        /*
+        * No HTMLo . é utilizado para classes.
+        * No json o . é utilizado para representar o nível dentro do caminho do arquivo
+        */
+
+
+        /*
+        * 1. [x] capturar o texto do box
+        * 2. [x] filtrar o texto do box para extrair somente o ID do pedido
+        * 3. [x] armazenar o ID do pedido de alguma forma
+        * 4. [ ] obter o ID do pedido armazenado de alguma forma
+        */
+
     });
 });

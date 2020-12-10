@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-jjj
 
 describe('Compra', () => {
     it('Efetuar uma compra de produto', () => {

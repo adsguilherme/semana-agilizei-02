@@ -48,6 +48,8 @@ jobs:
       # Não será necessário configurar o script 'npm run report:clean', pois a cada execução na máquina remota, a mesma é zerada.  
             
       - run: npm run cy:run
+        # Se o teste falhar irá dar continuidade
+        continue-on-error: true
       - run: npm run report:merge
       - run: npm run report:mocha
         

@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: [ master ]
     
-# Entendo o que faz os comandos:
+# Entendendo o que faz os comandos:
 # Quando ocorrer um push na branch master esse gatilho será disparado e o build será executado.
 # O mesmo caso quando ocorrer um pull request na branch master.
 

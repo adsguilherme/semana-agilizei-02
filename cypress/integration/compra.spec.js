@@ -91,7 +91,7 @@ describe('Compra', () => {
         })
 
         /*
-        * No HTMLo . é utilizado para classes.
+        * No HTML o . é utilizado para classes.
         * No json o . é utilizado para representar o nível dentro do caminho do arquivo
         */
 
@@ -100,7 +100,7 @@ describe('Compra', () => {
         * 1. [x] capturar o texto do box
         * 2. [x] filtrar o texto do box para extrair somente o ID do pedido
         * 3. [x] armazenar o ID do pedido de alguma forma
-        * 4. [ ] obter o ID do pedido armazenado de alguma forma
+        * 4. [x] obter o ID do pedido armazenado de alguma forma
         */
 
     });

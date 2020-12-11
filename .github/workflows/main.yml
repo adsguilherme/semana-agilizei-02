@@ -57,6 +57,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1 # Action de terceiros
         with:
-          GITHUB_TOKEN: $ {{ secrets.GITHUB_TOKEN }} # Essa variável será capturada do nosso github, pois estamos usando uma action de terceiros. 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Essa variável será capturada do nosso github, pois estamos usando uma action de terceiros. 
           BRANCH: gh-pages
           FOLDER: mochawesome-report # Aqui é a pasta que irá conter o arquivo .html para ser exibido no GH Pages.

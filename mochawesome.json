@@ -2,14 +2,14 @@
   "stats": {
     "suites": 1,
     "tests": 1,
-    "passes": 1,
+    "passes": 0,
     "pending": 0,
-    "failures": 0,
-    "start": "2020-12-11T04:13:49.630Z",
-    "end": "2020-12-11T04:14:03.732Z",
-    "duration": 14102,
+    "failures": 1,
+    "start": "2021-03-16T02:26:53.218Z",
+    "end": "2021-03-16T02:27:05.484Z",
+    "duration": 12266,
     "testsRegistered": 1,
-    "passPercent": 100,
+    "passPercent": 0,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "4406b704-ca59-4789-bb3c-6eabf0ac3e47",
+      "uuid": "da19e8de-39c8-4312-83e4-162761f61389",
       "title": "",
       "fullFile": "cypress/integration/compra.spec.js",
       "file": "cypress/integration/compra.spec.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "0d1338ec-1c12-4b84-bbf9-5167857d0bc6",
+          "uuid": "4a59c72f-a3c8-4db7-9d5f-bedb2edc8f50",
           "title": "Compra",
           "fullFile": "",
           "file": "",
@@ -38,29 +38,33 @@
               "title": "Efetuar uma compra de produto",
               "fullTitle": "Compra Efetuar uma compra de produto",
               "timedOut": null,
-              "duration": 14014,
-              "state": "passed",
-              "speed": "slow",
-              "pass": true,
-              "fail": false,
+              "duration": 12188,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
               "pending": false,
               "context": null,
               "code": "cy.backgroundLogin();\ncy.visit('/'); // cy.pause()\nvar nomeProduto = 'Faded Short Sleeve T-shirts'; // mouseover passa o mouse sobre o produto. Mas deve ter o 'gatilho' (trigger) para acionar esse recurso.\ncy.contains(nomeProduto).trigger('mouseover');\ncy.contains(nomeProduto).parents() // o parents é para podermos buscar dentro da árvore de elementos por nível [h5]\n.siblings('div.button-container') // verificando os irmãos de um elemento\n.children('a').first() // add to cart // O first pega uma posição específica\n.click(); // Validando se o produto foi adicionado ao carrinho com sucesso\ncy.get('.icon-ok').parent() // h2\n.should('contain.text', 'Product successfully added to your shopping cart');\ncy.get('span#layer_cart_product_title').should('contain.text', nomeProduto); // cy.pause()\ncy.get(\".button-container a[href$='controller=order']\").click();\ncy.get(\".cart_navigation a[href$='controller=order&step=1']\").click();\n/*\ncy.get('#email').type('guilherme.sousa@gazin.com.br')\ncy.get('#passwd').type('12345678')\n  cy.get('#SubmitLogin').click()\n*/\n// Validando se o endereço de cobrança é igual o de cobrança\n// [type=\"checkbox\"]#addressesAreEquals[value=\"1\"][checked=\"checked\"]\n// asserção | atributo | valor    \n// 'have.attr' quer fizer tenha o atributo checked e que esse atributo se chame checked.\ncy.get('[type=\"checkbox\"]#addressesAreEquals').should('have.attr', 'checked', 'checked');\ncy.get('[type=\"checkbox\"]#addressesAreEquals').should('have.attr', 'name', 'same');\ncy.get('button[name=\"processAddress\"]').click();\ncy.get('input[type=checkbox]#cgv').check();\ncy.get('button[name=\"processCarrier\"]').click();\ncy.get('a[class=\"bankwire\"][title$=\"wire\"]').click();\ncy.get('#cart_navigation button[type=\"submit\"]').find('span').contains('I confirm my order').click(); // expect = forma explícita\n// should = forma implícita\ncy.get('p[class=\"cheque-indent\"] strong').should('contain.text', 'Your order on My Store is complete.');\ncy.get('div.box').invoke('text').then(function (text) {\n  console.log(text); // https://regexr.com/\n  console.log(text.match(/[A-Z][A-Z]+/g)[1]); // no caso o [1] é um array e representa o ID do pedido\n  // 0 -> RTP\n  // 1 -> ID do pedido\n  // Escrita de um arquivo json com o conteúdo do pedido\n  // Caminho do arquivo (o caminho é sempre a partir do root do projeto) | conteúdo do arquivo\n  // Ao passar o diretório + nome do arquivo, o mesmo será criado após a execução do teste\n  cy.writeFile('cypress/fixtures/pedido.json', {\n    id: \"\".concat(text.match(/[A-Z][A-Z]+/g)[1])\n  });\n});\ncy.get(\".cart_navigation a[href$='history']\").click(); // Leitura de um arquivo\ncy.readFile('cypress/fixtures/pedido.json').then(function (pedido) {\n  cy.get('tr.first_item .history_link a').should('contain.text', pedido.id);\n});\n/*\n* No HTML o . é utilizado para classes.\n* No json o . é utilizado para representar o nível dentro do caminho do arquivo\n*/\n/*\n* 1. [x] capturar o texto do box\n* 2. [x] filtrar o texto do box para extrair somente o ID do pedido\n* 3. [x] armazenar o ID do pedido de alguma forma\n* 4. [x] obter o ID do pedido armazenado de alguma forma\n*/",
-              "err": {},
-              "uuid": "d3d0c1b2-9c91-429c-93f1-5248fc593212",
-              "parentUUID": "0d1338ec-1c12-4b84-bbf9-5167857d0bc6",
+              "err": {
+                "message": "AssertionError: Timed out retrying: Expected to find element: `[type=\"checkbox\"]#addressesAreEquals`, but never found it.",
+                "estack": "AssertionError: Timed out retrying: Expected to find element: `[type=\"checkbox\"]#addressesAreEquals`, but never found it.\n    at Context.eval (http://automationpractice.com/__cypress/tests?p=cypress/integration/compra.spec.js:129:52)",
+                "diff": null
+              },
+              "uuid": "c72effb8-417b-4a52-9cb8-7b2ff87e05c4",
+              "parentUUID": "4a59c72f-a3c8-4db7-9d5f-bedb2edc8f50",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
-          "passes": [
-            "d3d0c1b2-9c91-429c-93f1-5248fc593212"
+          "passes": [],
+          "failures": [
+            "c72effb8-417b-4a52-9cb8-7b2ff87e05c4"
           ],
-          "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 14014,
+          "duration": 12188,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
